@@ -1,8 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
 import { NavBar } from './components';
-import { Outlet } from 'react-router-dom';
+
 
 function App() {
   return (
