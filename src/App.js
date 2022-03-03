@@ -15,7 +15,7 @@ function App() {
         loginWithRedirect();
       }
     })
-  }, [])
+  })
   
   return (
     <div className="App">
