@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import { NavBar } from './components';
 import { useAuth0 } from '@auth0/auth0-react';
