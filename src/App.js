@@ -22,16 +22,16 @@ function App() {
 
   if (loading) {
     return (
-      <div className='App'>
+      <div className='Main'>
         <Loading/>
       </div>
     )
   }
   
   return (
-    <div className="App">
+    <div >
       <NavBar/>
-      <header className="App-header">
+      <header className="Main">
         <h1>Hello from admin</h1>
       </header>
     </div>
