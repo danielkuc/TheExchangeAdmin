@@ -21,9 +21,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className='Main'>
-        <Loading/>
-      </div>
+      <Loading/>
     )
   }
   
