@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { Form, FloatingLabel, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 
 const Main = () => {
   const formik = useFormik({
