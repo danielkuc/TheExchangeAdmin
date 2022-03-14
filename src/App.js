@@ -2,7 +2,7 @@ import './App.css';
 import { NavBar } from './components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
-import { Loading } from './components';
+import { Loading, Main } from './components';
 
 function App() {
   const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
@@ -28,9 +28,7 @@ function App() {
   return (
     <div >
       <NavBar/>
-      <header className="Main">
-        <h1>Hello from admin</h1>
-      </header>
+      <Main/>
     </div>
   );
 }

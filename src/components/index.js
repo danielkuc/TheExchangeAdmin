@@ -1,5 +1,6 @@
+import Main from "./Main";
 import Loading from "./Loading";
 import NavBar from "./NavBar";
 
 
-export { Loading, NavBar };
+export { Loading, NavBar, Main };
