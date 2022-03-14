@@ -19,14 +19,17 @@ const Main = () => {
       <Row className='justify-content-center' >
         <Col md={4} >
         <Form>
-          <Form.Group as={Col} >
-          <FloatingLabel
-    controlId="floatingInput"
-    label="Email address"
-    className="mb-3"
-  >
-    <Form.Control type="email" placeholder="name@example.com" />
-  </FloatingLabel>
+          <Form.Group controlId='productName' >
+            <Form.Label>Product name</Form.Label>
+            <Form.Control as='input' type='text' />
+          </Form.Group>
+          <Form.Group controlId='productDescription' >
+            <Form.Label>Product description</Form.Label>
+            <Form.Control as='textarea' type='textarea' htmlSize='50' />
+          </Form.Group>
+          <Form.Group controlId='productPrice' >         
+            <Form.Label>Product price</Form.Label>
+            <Form.Control as='input' type='number' min='0.5' />
           </Form.Group>
         </Form>
       </Col>
