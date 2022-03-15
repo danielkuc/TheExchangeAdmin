@@ -21,12 +21,14 @@ function App() {
 
   if (loading) {
     return (
-      <Loading/>
+      <div className='vh-100 d-flex justify-content-center align-items-center'>
+        <Loading/>
+      </div>
     )
   }
   
   return (
-    <div >
+    <div className='vh-100'>
       <NavBar/>
       <Main/>
     </div>

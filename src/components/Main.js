@@ -1,22 +1,22 @@
 import React from 'react'
-import { useFormik } from 'formik'
+// import { useFormik } from 'formik'
 import { Form, Container, Row, Col } from 'react-bootstrap';
 
 const Main = () => {
-  const formik = useFormik({
-    initialValues:  {
-      productName:'',
-      productDescription:'',
-      productPrice:''
-    },
-    onSubmit: values => {
-      console.log(values);
-    }
-  });
+  // const formik = useFormik({
+  //   initialValues:  {
+  //     productName:'',
+  //     productDescription:'',
+  //     productPrice:''
+  //   },
+  //   onSubmit: values => {
+  //     console.log(values);
+  //   }
+  // });
 
   return (
     <Container>
-      <Row className='justify-content-center' >
+      <Row className='vh-90 d-flex justify-content-center align-items-center' >
         <Col md={4} >
         <Form>
           <Form.Group controlId='productName' >
