@@ -4,13 +4,14 @@ import { NavLink } from "react-router-dom";
 
 const MainNav = () => (
   <div className="navbar-nav mr-auto">
-    <NavLink
+    {/* <NavLink
       to="https://exchange-shop.netlify.app"
       exact="true"
       className={({ isActive }) => "nav-link" + (isActive ? " router-link-exact-active" : "")}
     >
       Home
-    </NavLink>
+    </NavLink> */}
+    <a href="https://exchange-shop.netlify.app" className="nav-link" >Home</a>
   </div>
 );
 
