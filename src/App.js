@@ -11,7 +11,6 @@ function App() {
 
   useEffect(() => {
     getAccessTokenSilently().then(token => {
-      console.log("logged in");
       setLoading(false);
     }).catch(e => {
       if (e.error === 'login_required') {
