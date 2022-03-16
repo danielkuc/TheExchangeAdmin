@@ -1,8 +1,9 @@
 import './App.css';
-import { NavBar } from './components';
+import { Default, NavBar } from './components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { Loading, Main } from './components';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
@@ -30,7 +31,10 @@ function App() {
   return (
     <div className='vh-100'>
       <NavBar/>
-      <Main/>
+      <Routes>
+        <Route path='/' element={<Main/>} />
+        <Route path='/*' element={<Default/>} />
+      </Routes>
     </div>
   );
 }
