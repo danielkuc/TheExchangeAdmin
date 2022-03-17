@@ -49,6 +49,7 @@ const Main = () => {
               <Form.Group controlId='productName' className='py-3'>
                 <Form.Label>Product name</Form.Label>
                 <Form.Control as='input' type='text' value={values.productName} onBlur={handleBlur} onChange={handleChange} isInvalid={errors.productName} />
+                <p>{errors.productName}</p>
               </Form.Group>
 
               <Form.Group controlId='productDescription' className='py-3'>

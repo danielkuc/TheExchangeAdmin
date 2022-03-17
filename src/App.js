@@ -2,7 +2,7 @@ import './App.css';
 import { Default, NavBar } from './components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
-import { Loading, Main } from './components';
+import { AddProductsForm,Loading, Main } from './components';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
     <div className='vh-100'>
       <NavBar/>
       <Routes>
-        <Route path='/' element={<Main/>} />
+        <Route path='/' element={<AddProductsForm/>} />
         <Route path='/*' element={<Default/>} />
       </Routes>
     </div>
