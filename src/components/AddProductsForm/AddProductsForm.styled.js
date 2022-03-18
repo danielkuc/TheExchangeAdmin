@@ -4,16 +4,11 @@ import { Form, Button } from 'react-bootstrap';
 const CONTAINER = styled.div`
   background: #F7F9FA;
   height: auto;
-  width: 90%;
   margin: 5em auto;
   color: snow;
   -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
-
-  @media(min-width: 786px) {
-    width: 60%;
-  }
 
   label {
     color: #24B9B6;
@@ -33,13 +28,12 @@ const CONTAINER = styled.div`
 
 
 const MYFORM = styled(Form)`
-  width: 90%;
   text-align: left;
   padding-top: 2em;
   padding-bottom: 2em;
 
   @media(min-width: 786px) {
-    width: 50%;
+    width: 80%;
   }
 `;
 
