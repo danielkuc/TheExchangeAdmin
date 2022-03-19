@@ -7,14 +7,14 @@ import * as Yup from 'yup';
 const AddProductsForm = () => {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .min(5, "*Name must have at least 5 characters")
-      .max(15, "*Names can't be longer than 15 characters")
-      .required("*Name is required"),
+      .min(5, "*Product Name must have at least 5 characters")
+      .max(15, "*Product Name can't be longer than 15 characters")
+      .required("*Product Name is required"),
     description: Yup.string()
-      .min(15, "*Description must have at least 15 characters")
-      .max(30, "*Description can't be longer than 30 characters")
-      .required("*Description is required"),
-    price: Yup.number().required("*Price is required")
+      .min(15, "*Product Description must have at least 15 characters")
+      .max(30, "*Product Description can't be longer than 30 characters")
+      .required("*Product Description is required"),
+    price: Yup.number().positive().required("*Product Price is required")
   });
 
   return (
