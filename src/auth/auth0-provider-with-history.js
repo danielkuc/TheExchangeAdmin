@@ -18,6 +18,8 @@ const Auth0ProviderWithHistory = ({ children }) => {
       clientId={clientId}
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
+      //audience="the-exchange/api/auth"
+      scope="read-write:products"
     >
       {children}
     </Auth0Provider>
