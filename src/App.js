@@ -6,12 +6,13 @@ import { Loading, Main } from './components';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
+  const { loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAccessTokenSilently().then(token => {
+    getAccessTokenSilently().then(() => {
       setLoading(false);
+      console.log(user);
     }).catch(e => {
       if (e.error === 'login_required') {
         loginWithRedirect();
