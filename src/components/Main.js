@@ -13,7 +13,8 @@ const Main = () => {
   const getProducts = async () => {
     try {
       const accessToken = await getAccessTokenSilently({
-        audience:"https://exchange/api"
+        audience:"https://exchange/api",
+        //scope:"read:products"
       });
 
       const result = await axios.get("https://localhost:7015/admin/products.all", {
