@@ -4,7 +4,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import { Loading, Main } from './components';
 import { Routes, Route } from 'react-router-dom';
-import axios from 'axios';
 
 function App() {
   const { isAuthenticated, loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
@@ -22,23 +21,6 @@ function App() {
       }
     })
   });
-
-  const getProducts = async () => {
-    try {
-      const accessToken = await getAccessTokenSilently({
-        audience:"https://exchange/api"
-      });
-
-      const products = await axios.get("ulr", {
-        Authorization: `Bearer ${accessToken}`
-      });
-
-      console.log(products);
-
-    } catch (error) {
-      
-    }
-  }
 
   if (loading) {
     return (
