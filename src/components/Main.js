@@ -14,12 +14,11 @@ const Main = () => {
     try {
       const accessToken = await getAccessTokenSilently({
         audience:"https://exchange/api",
-        scope:"read:products"
+        scope:"product:read-write"
       });
 
-      const result = await axios.get("https://theexchangeapi.azurewebsites.net/admin/products.all", {
+      const result = await axios.get("https://localhost:7015/admin/products.all", {
         headers:{
-          Accept:"application/json",
           Authorization: `Bearer ${accessToken}`
         }
       });
