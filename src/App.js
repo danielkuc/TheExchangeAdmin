@@ -7,7 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const { isAuthenticated, loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getAccessTokenSilently().then(() => {
