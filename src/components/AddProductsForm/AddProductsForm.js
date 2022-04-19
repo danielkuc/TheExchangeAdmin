@@ -18,18 +18,20 @@ const AddProductsForm = () => {
       .min(15, "*Product Description must have at least 15 characters")
       .max(30, "*Product Description can't be longer than 30 characters")
       .required("*Product Description is required"),
-    price: Yup.number().positive().required("*Product Price is required")
+    price: Yup.number().positive().required("*Product Price is required"),
+    available: Yup.bool(),
+    quantity: Yup.number().min(0).max(1000000)
   });
 
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', available:true, quantity:20, addedBy:user.email}}
+        initialValues={{name:'', price:'', description:'', available:false, quantity:0, addedBy:''}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
           setSubmitting(true);
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            alert(JSON.stringify({...values, addedBy:user.email}, null, 2));
             resetForm();
             setSubmitting(false);
           }, 500);
@@ -87,6 +89,35 @@ const AddProductsForm = () => {
                 className={touched.price && errors.price ? "error" : null}
                 />
                 {touched.price && errors.price ? (<div className="error-message">{errors.price}</div>): null}
+            </Form.Group>
+            <Form.Group controlId="prodQuantity" className='py-4' >
+              <Form.Label>Product Quantity :</Form.Label>
+              <Form.Control
+                type="number"
+                name="quantity"
+                min="0"
+                max="100000"
+                step="any"
+                placeholder="Product Quantity"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.quantity}
+                className={touched.quantity && errors.quantity ? "error" : null}
+                />
+                {touched.quantity && errors.quantity ? (<div className="error-message">{errors.quantity}</div>): null}
+            </Form.Group>
+            <Form.Group controlId="prodAvailability" className='py-4' >
+              <Form.Label>Mark product as available :</Form.Label>
+              <Form.Control
+                type="checkbox"
+                name="available"
+                placeholder="Product Available"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.available}
+                className={touched.available && errors.available ? "error" : null}
+                />
+                {touched.available && errors.available ? (<div className="error-message">{errors.available}</div>): null}
             </Form.Group>
             <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
               Add New Product
