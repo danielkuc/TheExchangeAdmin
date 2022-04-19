@@ -3,8 +3,12 @@ import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { CONTAINER, MYFORM, BUTTON } from './AddProductsForm.styled';
 import * as Yup from 'yup';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const AddProductsForm = () => {
+  
+  const { user } = useAuth0();
+
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(5, "*Product Name must have at least 5 characters")
@@ -20,7 +24,7 @@ const AddProductsForm = () => {
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:''}}
+        initialValues={{name:'', price:'', description:'', available:true, quantity:20, addedBy:user.email}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
           setSubmitting(true);
