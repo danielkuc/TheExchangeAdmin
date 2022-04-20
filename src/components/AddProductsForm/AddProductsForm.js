@@ -4,10 +4,11 @@ import { Form } from 'react-bootstrap';
 import { CONTAINER, MYFORM, BUTTON } from './AddProductsForm.styled';
 import * as Yup from 'yup';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 const AddProductsForm = () => {
   
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -28,13 +29,30 @@ const AddProductsForm = () => {
       <Formik
         initialValues={{name:'', price:'', description:'', available:false, quantity:0, addedBy:''}}
         validationSchema={validationSchema}
-        onSubmit={(values, {setSubmitting, resetForm}) => {
+        onSubmit={ async (values, {setSubmitting, resetForm}) => {
+          
           setSubmitting(true);
-          setTimeout(() => {
-            alert(JSON.stringify({...values, addedBy:user.email}, null, 2));
-            resetForm();
-            setSubmitting(false);
-          }, 500);
+
+          const accessToken = await getAccessTokenSilently({
+            audience:"https://exchange/api",
+            scope:"write:products"
+          });
+          
+          const newProduct = JSON.stringify({...values, addedBy:user.email});
+          
+          await axios.post("https://theexchangeapi.azurewebsites.net/admin/products.all", newProduct,{ 
+            headers:{ 
+              Authorization: `Bearer ${accessToken}` 
+            } } )
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+          
+          
+            // setTimeout(() => {
+          //   alert(JSON.stringify({...values, addedBy:user.email}, null, 2));
+          //   resetForm();
+          //   setSubmitting(false);
+          // }, 500);
       }}
       >
         {({
