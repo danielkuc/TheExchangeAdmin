@@ -9,7 +9,7 @@
 .error-message {
   color: #FF6565;
   padding: .5em .2em;
-  height: 1em;
+  height: 1.5em;
   position: absolute;
   font-size: .8em;
-}
+  font-weight: bolder;}

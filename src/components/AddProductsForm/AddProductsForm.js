@@ -38,7 +38,6 @@ const AddProductsForm = () => {
             scope:"write:products"
           });          
           const newProduct = {...values, addedBy:user.email}
-          console.log(newProduct);
           
           await axios.post("https://localhost:7015/admin/product.add", newProduct,{ 
             headers:{ 
@@ -46,14 +45,7 @@ const AddProductsForm = () => {
             } } )
             .then(response => console.log(response))
             .catch(error => console.log(error));
-          
-          
-            // setTimeout(() => {
-          //   alert(JSON.stringify({...values, addedBy:user.email}, null, 2));
-          //   resetForm();
-          //   setSubmitting(false);
-          // }, 500);
-      }}
+        }}
       >
         {({
           values,
