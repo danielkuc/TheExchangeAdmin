@@ -36,11 +36,11 @@ const AddProductsForm = () => {
           const accessToken = await getAccessTokenSilently({
             audience:"https://exchange/api",
             scope:"write:products"
-          });
+          });          
+          const newProduct = {...values, addedBy:user.email}
+          console.log(newProduct);
           
-          const newProduct = JSON.stringify({...values, addedBy:user.email});
-          
-          await axios.post("https://theexchangeapi.azurewebsites.net/admin/products.all", newProduct,{ 
+          await axios.post("https://localhost:7015/admin/product.add", newProduct,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
             } } )
