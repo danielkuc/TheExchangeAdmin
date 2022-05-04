@@ -27,7 +27,7 @@ const AddProductsForm = () => {
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', isAvailable: false, quantity:0, addedBy:''}}
+        initialValues={{name:'', price:'', description:'', isAvailable: true, quantity:0, addedBy:''}}
         validationSchema={validationSchema}
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
@@ -38,12 +38,14 @@ const AddProductsForm = () => {
             scope:"write:products"
           });          
           const newProduct = {...values, addedBy:user.email}
-          console.log(newProduct);
           await axios.post("https://localhost:7015/admin/product.add", newProduct,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
             } } )
-            .then(response => console.log(response))
+            .then(response => {
+              console.log(response);
+              resetForm();
+            })
             .catch(error => console.log(error));
         }}
       >
@@ -54,7 +56,8 @@ const AddProductsForm = () => {
           handleChange,
           handleBlur,
           handleSubmit,
-          isSubmitting
+          isSubmitting,
+          setFieldValue
         })=>(
 
           <MYFORM className="mx-auto" onSubmit={handleSubmit}>
@@ -122,9 +125,9 @@ const AddProductsForm = () => {
                 type="checkbox"
                 name="isAvailable"
                 placeholder="Product Available"
-                onChange={handleChange}
+                checked={values.isAvailable}
+                onChange={() => {setFieldValue("isAvailable", !values.isAvailable)}}
                 onBlur={handleBlur}
-                value={values.isAvailable}
                 className={touched.isAvailable && errors.isAvailable ? "error" : null}
                 />
                 {touched.isAvailable && errors.isAvailable ? (<div className="error-message">{errors.isAvailable}</div>): null}
