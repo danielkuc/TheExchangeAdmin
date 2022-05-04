@@ -20,14 +20,14 @@ const AddProductsForm = () => {
       .max(30, "*Product Description can't be longer than 30 characters")
       .required("*Product Description is required"),
     price: Yup.number().positive().required("*Product Price is required"),
-    available: Yup.bool(),
+    isAvailable: Yup.bool(),
     quantity: Yup.number().min(0).max(1000000)
   });
 
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', available:false, quantity:0, addedBy:''}}
+        initialValues={{name:'', price:'', description:'', isAvailable:true, quantity:0, addedBy:''}}
         validationSchema={validationSchema}
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
@@ -38,7 +38,7 @@ const AddProductsForm = () => {
             scope:"write:products"
           });          
           const newProduct = {...values, addedBy:user.email}
-          
+          console.log(newProduct);
           await axios.post("https://localhost:7015/admin/product.add", newProduct,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
@@ -120,14 +120,14 @@ const AddProductsForm = () => {
               <Form.Label>Mark product as available :</Form.Label>
               <Form.Control
                 type="checkbox"
-                name="available"
+                name="isAvailable"
                 placeholder="Product Available"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.available}
-                className={touched.available && errors.available ? "error" : null}
+                value={values.isAvailable}
+                className={touched.isAvailable && errors.isAvailable ? "error" : null}
                 />
-                {touched.available && errors.available ? (<div className="error-message">{errors.available}</div>): null}
+                {touched.isAvailable && errors.isAvailable ? (<div className="error-message">{errors.isAvailable}</div>): null}
             </Form.Group>
             <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
               Add New Product
