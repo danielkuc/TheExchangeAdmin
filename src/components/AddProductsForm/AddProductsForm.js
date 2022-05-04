@@ -27,7 +27,7 @@ const AddProductsForm = () => {
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', isAvailable:true, quantity:0, addedBy:''}}
+        initialValues={{name:'', price:'', description:'', isAvailable: false, quantity:0, addedBy:''}}
         validationSchema={validationSchema}
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
