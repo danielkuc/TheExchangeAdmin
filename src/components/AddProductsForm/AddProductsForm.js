@@ -38,7 +38,7 @@ const AddProductsForm = () => {
             scope:"write:products"
           });          
           const newProduct = {...values, addedBy:user.email}
-          await axios.post("https://localhost:7015/admin/product.add", newProduct,{ 
+          await axios.post("https://theexchangeapi.azurewebsites.net/admin/product.add", newProduct,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
             } } )
