@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Auth0ProviderWithHistory = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+  const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       clientId={clientId}
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
-      audience="https://exchange/api"
+      audience={audience}
       scope="read:products write:products"
     >
       {children}

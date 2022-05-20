@@ -7,7 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 const AddProductsForm = () => {
-  
+  const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+  const requestURL = process.env.REACT_APP_AUTH0_REQUEST_URL;
   const { user, getAccessTokenSilently } = useAuth0();
 
   const validationSchema = Yup.object().shape({
@@ -34,11 +35,12 @@ const AddProductsForm = () => {
           setSubmitting(true);
 
           const accessToken = await getAccessTokenSilently({
-            audience:"https://exchange/api",
+            audience:audience,
             scope:"write:products"
           });          
           const newProduct = {...values, addedBy:user.email}
-          await axios.post("https://theexchangeapi.azurewebsites.net/admin/product.add", newProduct,{ 
+          console.log(newProduct);
+          await axios.post(requestURL, newProduct,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
             } } )
