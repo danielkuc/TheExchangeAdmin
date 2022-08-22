@@ -9,7 +9,7 @@ import axios from 'axios';
 const AddProductsForm = () => {
   const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
   const requestURL = process.env.REACT_APP_AUTH0_REQUEST_URL;
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -18,17 +18,17 @@ const AddProductsForm = () => {
       .required("*Product Name is required"),
     description: Yup.string()
       .min(15, "*Product Description must have at least 15 characters")
-      .max(30, "*Product Description can't be longer than 30 characters")
+      .max(100, "*Product Description can't be longer than 100 characters")
       .required("*Product Description is required"),
     price: Yup.number().positive().required("*Product Price is required"),
-    isAvailable: Yup.bool(),
+    isActive: Yup.bool(),
     quantity: Yup.number().min(0).max(1000000)
   });
 
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', isAvailable: true, quantity:0, addedBy:''}}
+        initialValues={{name:'', price:'', description:'', isActive: true, quantity:0}}
         validationSchema={validationSchema}
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
@@ -38,7 +38,7 @@ const AddProductsForm = () => {
             audience:audience,
             scope:"write:products"
           });          
-          const newProduct = {...values, addedBy:user.email}
+          const newProduct = {...values}
           console.log(newProduct);
           await axios.post(requestURL, newProduct,{ 
             headers:{ 
@@ -122,17 +122,17 @@ const AddProductsForm = () => {
                 {touched.quantity && errors.quantity ? (<div className="error-message">{errors.quantity}</div>): null}
             </Form.Group>
             <Form.Group controlId="prodAvailability" className='py-4' >
-              <Form.Label>Mark product as available :</Form.Label>
+              <Form.Label>Mark product as active :</Form.Label>
               <Form.Control
                 type="checkbox"
-                name="isAvailable"
+                name="isActive"
                 placeholder="Product Available"
-                checked={values.isAvailable}
-                onChange={() => {setFieldValue("isAvailable", !values.isAvailable)}}
+                checked={values.isActive}
+                onChange={() => {setFieldValue("isActive", !values.isActive)}}
                 onBlur={handleBlur}
-                className={touched.isAvailable && errors.isAvailable ? "error" : null}
+                className={touched.isActive && errors.isActive ? "error" : null}
                 />
-                {touched.isAvailable && errors.isAvailable ? (<div className="error-message">{errors.isAvailable}</div>): null}
+                {touched.isActive && errors.isActive ? (<div className="error-message">{errors.isActive}</div>): null}
             </Form.Group>
             <BUTTON variant="primary" type="submit" disabled={isSubmitting}>
               Add New Product

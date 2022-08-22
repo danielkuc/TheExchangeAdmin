@@ -36,7 +36,6 @@ const Main = () => {
           <AddProductsForm/>        
         </Col>
       </Row>
-      <button onClick={getProducts} > Try Me </button>
     </Container>
     )
   }
