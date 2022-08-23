@@ -7,27 +7,27 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 const Main = () => {
-  const { getAccessTokenSilently } = useAuth0();
+  //const { getAccessTokenSilently } = useAuth0();
 
 
-  const getProducts = async () => {
-    try {
-      const accessToken = await getAccessTokenSilently({
-        audience:"https://exchange/api",
-        scope:"read:products"
-      });
-      const result = await axios.get("https://theexchangeapi.azurewebsites.net/admin/products.all", {
-        headers:{
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
+  // const getProducts = async () => {
+  //   try {
+  //     const accessToken = await getAccessTokenSilently({
+  //       audience:"https://exchange/api",
+  //       scope:"read:products"
+  //     });
+  //     const result = await axios.get("https://theexchangeapi.azurewebsites.net/admin/products.all", {
+  //       headers:{
+  //         Authorization: `Bearer ${accessToken}`
+  //       }
+  //     });
 
-      console.log(result.data);
+  //     console.log(result.data);
 
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
   
   return (
     <Container>
