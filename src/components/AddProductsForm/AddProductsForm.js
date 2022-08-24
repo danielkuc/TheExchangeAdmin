@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { CONTAINER, MYFORM, BUTTON } from './AddProductsForm.styled';
@@ -8,28 +8,10 @@ import axios from 'axios';
 
 const AddProductsForm = () => {
   const defaultImgSrc = '/img/placeholder.png';
-  const initialImgValues = {
-    imgSrc : defaultImgSrc,
-    imgFile: null
-  }
-  const [imgValues, setImgValues] = useState(initialImgValues)
+
   const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
   const requestURL = process.env.REACT_APP_AUTH0_REQUEST_URL;
   const { getAccessTokenSilently } = useAuth0();
-
-  const showPreview= e =>{
-    if (e.target.files && e.target.files[0]) {
-      let imageFile = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = x => {
-        setImgValues({
-          imgFile: imageFile,
-          imgSrc: x.target.result
-        });
-      }
-      reader.readAsDataURL(imageFile);
-    }
-  }
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -48,9 +30,8 @@ const AddProductsForm = () => {
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', isActive: true, quantity:0, imgSource:defaultImgSrc, imgFile:null}}
+        initialValues={{name:'', price:'', description:'', isActive: true, quantity:0, photo:defaultImgSrc}}
         validationSchema={validationSchema}
-        setFieldValue
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
           setSubmitting(true);
@@ -84,15 +65,16 @@ const AddProductsForm = () => {
         })=>(
 
           <MYFORM className="mx-auto" onSubmit={handleSubmit}>
-            <img src={imgValues.imgSrc} alt="product" className="productPreview"/>
-              <Form.Group controlId="productImage"  className="py-4" >
-                <Form.Label>Product Image</Form.Label>
+            <img src={values.photo} alt="product" className="productPreview"/>
+              <div>
+                <Form.Label>Upload File</Form.Label>
                 <Form.Control
                   type="file"
+                  name="photo"
                   accept="image/*"
-                  onChange={showPreview}
+                  onChange={(e) => setFieldValue("photo", e.target.files[0])}
                 />
-              </Form.Group>
+              </div>
               <Form.Group controlId="prodName" className='py-4' >
                 <Form.Label>Product Name :</Form.Label>
                 <Form.Control
