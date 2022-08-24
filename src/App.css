@@ -13,3 +13,7 @@
   position: absolute;
   font-size: .8em;
   font-weight: bolder;}
+
+  .productPreview {
+    max-width: 100%;
+  }
