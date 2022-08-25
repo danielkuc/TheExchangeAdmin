@@ -1,17 +1,35 @@
-import React from 'react';
-import { Formik } from 'formik';
-import { Form } from 'react-bootstrap';
-import { CONTAINER, MYFORM, BUTTON } from './AddProductsForm.styled';
-import * as Yup from 'yup';
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
+import React, { useState } from 'react'
+import { Formik } from 'formik'
+import { Form } from 'react-bootstrap'
+import { CONTAINER, MYFORM, BUTTON } from './AddProductsForm.styled'
+import * as Yup from 'yup'
+import { useAuth0 } from '@auth0/auth0-react'
+import axios from 'axios'
 
 const AddProductsForm = () => {
   const defaultImgSrc = '/img/placeholder.png';
+  const [imageValues, setImageValues] = useState({
+    imgSrc:defaultImgSrc,
+    imgFile:null
+  });
+
+  const setPhoto = e => {
+    if (e.target.files && e.target.files[0]) {
+      let imgFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = x => {
+        setImageValues({
+          imgFile,
+          imgSrc : x.target.result
+        });
+      }
+      reader.readAsDataURL(imgFile);
+    }
+  }
 
   const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
   const requestURL = process.env.REACT_APP_AUTH0_REQUEST_URL;
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0()
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -30,25 +48,35 @@ const AddProductsForm = () => {
   return (
     <CONTAINER>
       <Formik
-        initialValues={{name:'', price:'', description:'', isActive: true, quantity:0, photo:defaultImgSrc}}
+        initialValues={{name:'', price:'', description:'', isActive: true, quantity:0}}
         validationSchema={validationSchema}
         onSubmit={ async (values, {setSubmitting, resetForm}) => {
           
-          setSubmitting(true);
+          setSubmitting(true)
 
           const accessToken = await getAccessTokenSilently({
             audience:audience,
             scope:"write:products"
           });          
-          const newProduct = {...values}
-          console.log(newProduct);
-          await axios.post(requestURL, newProduct,{ 
+
+          const formData = new FormData()
+          formData.append("name", values.name)
+          formData.append("price", values.price)
+          formData.append("description", values.description)
+          formData.append("isActive", values.isActive)
+          formData.append("quantity", values.quantity)
+          formData.append("image", imageValues.imgFile)
+
+          for (const pair of formData.entries()) {
+            console.log(pair);
+          }
+          await axios.post(requestURL, formData,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
             } } )
             .then(response => {
               console.log(response);
-              resetForm();
+              resetForm()
             })
             .catch(error => console.log(error));
         }}
@@ -65,14 +93,14 @@ const AddProductsForm = () => {
         })=>(
 
           <MYFORM className="mx-auto" onSubmit={handleSubmit}>
-            <img src={values.photo} alt="product" className="productPreview"/>
+            <img src={imageValues.imgSrc} alt="product" className="productPreview"/>
               <div>
                 <Form.Label>Upload File</Form.Label>
                 <Form.Control
                   type="file"
                   name="photo"
                   accept="image/*"
-                  onChange={(e) => setFieldValue("photo", e.target.files[0])}
+                  onChange={setPhoto}
                 />
               </div>
               <Form.Group controlId="prodName" className='py-4' >
