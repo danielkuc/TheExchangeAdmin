@@ -19,7 +19,7 @@ const AddProductsForm = () => {
       const reader = new FileReader();
       reader.onload = x => {
         setImageValues({
-          imgFile,
+          imgFile: imgFile,
           imgSrc : x.target.result
         });
       }
@@ -67,9 +67,6 @@ const AddProductsForm = () => {
           formData.append("quantity", values.quantity)
           formData.append("image", imageValues.imgFile)
 
-          for (const pair of formData.entries()) {
-            console.log(pair);
-          }
           await axios.post(requestURL, formData,{ 
             headers:{ 
               Authorization: `Bearer ${accessToken}` 
